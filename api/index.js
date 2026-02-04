@@ -1,23 +1,26 @@
-import express from "express"
-import path from "path"
-import { fileURLToPath } from "url"
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const app = express()
+const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+// view engine
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "../views"));
 
-// set view engine
-app.set("view engine", "ejs")
-app.set("views", path.join(__dirname, "../views"))
+// static
+app.use(express.static(path.join(__dirname, "../public")));
 
-// static file
-app.use(express.static(path.join(__dirname, "../public")))
-
-// ROUTE ROOT (INI YANG WAJIB ADA)
+// ✅ ROUTE UTAMA (INI YANG KURANG)
 app.get("/", (req, res) => {
-  res.render("index") // views/index.ejs
-})
+  res.render("index"); // views/index.ejs
+});
 
-// ⚠️ JANGAN app.listen
-export default app
+// contoh admin
+app.get("/admin", (req, res) => {
+  res.render("admin");
+});
+
+export default app;
