@@ -1,23 +1,25 @@
-import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
+import express from 'express'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-const app = express();
+const app = express()
 
-// fix __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
-// set view engine
-app.set("views", path.join(process.cwd(), "views"));
-app.set("view engine", "ejs");
+// view engine
+app.set('view engine', 'ejs')
+app.set('views', path.join(process.cwd(), 'views'))
 
-// static file
-app.use(express.static(path.join(process.cwd(), "public")));
+// static files
+app.use('/public', express.static(path.join(process.cwd(), 'public')))
 
 // route utama
-app.get("/", (req, res) => {
-  res.render("index");
-});
+app.get('/', (req, res) => {
+  res.render('index', {
+    title: 'Lens Store'
+  })
+})
 
-export default app;
+// IMPORTANT: JANGAN app.listen()
+export default app
